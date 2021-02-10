@@ -9,3 +9,12 @@ class Feeds(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     description = models.TextField()
     date = models.DateTimeField()
+
+class Like(models.Model):
+    user1 =  models.ForeignKey(CustomUser, on_delete=models.CASCADE)  
+    feeds1 = models.ForeignKey(Feeds, on_delete=models.CASCADE)
+
+class Dislike(models.Model):
+    user1 =  models.ForeignKey(CustomUser, on_delete=models.CASCADE)  
+    feeds1 = models.ForeignKey(Feeds, on_delete=models.CASCADE) 
+ 

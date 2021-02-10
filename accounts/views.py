@@ -6,6 +6,15 @@ from django.http import HttpResponse
 
 
 # Create your views here.
+
+def feedDetails(request,id):
+    #likecount = Like.objects.filter(feeds1=id).count()   # get likes count
+   # dislikecount = Dislike.objects.filter(feeds1=id).count() # get dislike count
+    feedDet = Feeds.objects.get(pk = id)
+    return render(request,'feedDetails.html', {'feedDet1': feedDet  }) #, 'likecount': likecount,'dislikecount': dislikecount
+
+
+
 def home(request):
     if request.method == 'POST':
         print("post")
@@ -21,7 +30,7 @@ def home(request):
     feed1 = Feeds.objects.all().order_by('-date')
     usr = CustomUser.objects.all()
     return render(request, 'home.html', {'feed': feed1, 'usr': usr})
-
+    
 
 def register(request):
     if request.method == 'POST':
