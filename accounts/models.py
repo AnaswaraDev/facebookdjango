@@ -17,4 +17,9 @@ class Like(models.Model):
 class Dislike(models.Model):
     user1 =  models.ForeignKey(CustomUser, on_delete=models.CASCADE)  
     feeds1 = models.ForeignKey(Feeds, on_delete=models.CASCADE) 
+
+class Comments(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    description = models.TextField()
+    date = models.DateTimeField()
  

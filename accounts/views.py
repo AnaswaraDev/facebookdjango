@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from .models import CustomUser,Feeds,Like,Dislike
+from .models import CustomUser,Feeds,Like,Dislike,Comments
 from django.contrib import messages
 from datetime import datetime
 from django.http import HttpResponse
@@ -38,10 +38,24 @@ def dislike(request, pk):
     return render(request,'feedDetails.html', {'feedDet1': feedDet, 'likecount': likecount,'dislikecount': dislikecount })
    
 def feedDetails(request,id):
+    if request.method == 'POST':
+        print("post")
+        description = request.POST.get('comment')
+        print(description)
+        date = datetime.now()
+        user = request.user
+        feed = Comments()
+        feed.description = description
+        feed.date = date
+        feed.user = user
+        feed.save()
+    feed1 = Comments.objects.all().order_by('-date')
+    usr = CustomUser.objects.all()
+   # return render(request, 'home.html', {'feed': feed1, 'usr': usr})
     likecount = Like.objects.filter(feeds1=id).count() # get likes count
     dislikecount = Dislike.objects.filter(feeds1=id).count() # get dislike count
     feedDet = Feeds.objects.get(pk = id)
-    return render(request,'feedDetails.html', {'feedDet1': feedDet, 'likecount': likecount,'dislikecount': dislikecount })
+    return render(request,'feedDetails.html', { 'feed': feed1, 'usr': usr,  'feedDet1': feedDet, 'likecount': likecount,'dislikecount': dislikecount })
 
 
 

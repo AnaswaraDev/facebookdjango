@@ -17,26 +17,24 @@
     <link rel="stylesheet" type="text/css" href="{%static 'styles/responsive.css' %}">
 </head>
 
-<body style="background-color: #288d7c;">
+<body style="background-color: #b9ccc9;">
     <br><br>
     <div class="container">
         <div class="row">
             <div class="col-md-3">
 
             </div>
-            <div class="col-md-6 " style="display: block; 
-             
+            <div class="col-md-6 " style="display: block;            
             padding:23px; color:white;">
-
-
                 <div class="col" style="background-color: white; padding:30px; color:black; ">
-
+                    <!--FEED DETAILS-->
                     <div style="background-color:#e4ece9;">
                         <p>User: {{feedDet1.user.first_name}} {{feedDet1.user.last_name}} </p>
                         <p>News Feed: {{feedDet1.description}}</p>
                         <p>Date: {{feedDet1.date}}</p>
                     </div>
-
+                    <!--FEED DETAILS-->
+                    <!-- LIKKE AND DISLIKE-->
                     <div> <br>
                         <span>
                             {%if likecount %}
@@ -54,7 +52,54 @@
                             <i class="fas fa-thumbs-down" style="font-size:28px; color:grey "></i>
                         </a>
                     </div>
+
+                    <!-- LIKKE AND DISLIKE-->
+                    <!-- COMMENT ADD-CODE -->
+                    <form action="" method="POST" class="form-box" style=" padding: 20px;"> <br><br>
+                        {% csrf_token %}
+
+                        <div class="form-group">
+                            <textarea class="form-control" rows="4" cols="50" name="comment"
+                                placeholder="Enter Text"></textarea> <br>
+                        </div>
+                        <div class=" form-group text-center ">
+                            <input class="btn-secondary" style="padding:12px" type="submit" value="Comment">
+                        </div>
+                    </form>
+
+
+
+                    <!-- COMMENT ADD-CODE -->
+                    <!--COMMMENT VIEW CODE-->
+
+                    <div>
+                        {% for i in feed %}
+
+                      
+
+                            <div class="col" style="border: solid 1px ; margin:14px;
+                            background-color: #e4ece9;">
+
+                                {% for j in usr %}
+                                {% if j.pk == i.user.pk %}
+                                <p>User: {{j.first_name}}&nbsp;{{j.last_name}}</p>
+                                {%endif%}
+                                {%endfor%}
+
+
+                                <p>News Feed: {{i.description}}</p>
+                                <p>Date: {{i.date}}</p>
+                            </div>
+                      
+                        {% endfor %}
+
+
+                    </div>
+
+                    <!--COMMENT VIEW CODE-->
+
                 </div>
+
 
             </div>
         </div>
