@@ -1,17 +1,47 @@
 from django.shortcuts import render,redirect
-from .models import CustomUser,Feeds
+from .models import CustomUser,Feeds,Like,Dislike
 from django.contrib import messages
 from datetime import datetime
 from django.http import HttpResponse
 
 
 # Create your views here.
+def like(request, pk):
+    if Like.objects.filter(user1=request.user.pk, feeds1=pk).exists(): # check user alredy liked or not
+        pass
+    else:                                                       #add like
+        like = Like()
+        like.user1 = request.user
+        like.feeds1 = Feeds.objects.get(pk=pk)
+        like.save()
+    if Dislike.objects.filter(user1=request.user.pk, feeds1=pk).exists():   # check user already dislike the post
+        Dislike.objects.filter(user1=request.user.pk, feeds1=pk).delete()   # if disliked remove dislike
+    likecount = Like.objects.filter(feeds1=pk).count()# get likes count
+    dislikecount = Dislike.objects.filter(feeds1=pk).count()# get dislike count
+    feedDet = Feeds.objects.get(pk=pk)
+    return render(request,'feedDetails.html', {'feedDet1': feedDet, 'likecount': likecount,'dislikecount': dislikecount })
 
+def dislike(request, pk):
+    if Dislike.objects.filter(user1=request.user.pk, feeds1=pk).exists(): # check user alredy disliked or not
+        pass
+    else:                                                    #add dislike
+        dislike = Dislike()
+        dislike.user1 = request.user
+        dislike.feeds1 = Feeds.objects.get(pk=pk)
+        dislike.save()
+    if Like.objects.filter(user1=request.user.pk, feeds1=pk).exists():      # check user alreasy like the post
+        Like.objects.filter(user1=request.user.pk, feeds1=pk).delete()      # if liked remove like
+    
+    likecount = Like.objects.filter(feeds1=pk).count() # get likes count
+    dislikecount = Dislike.objects.filter(feeds1=pk).count()# get dislike count
+    feedDet = Feeds.objects.get(pk=pk)
+    return render(request,'feedDetails.html', {'feedDet1': feedDet, 'likecount': likecount,'dislikecount': dislikecount })
+   
 def feedDetails(request,id):
-    #likecount = Like.objects.filter(feeds1=id).count()   # get likes count
-   # dislikecount = Dislike.objects.filter(feeds1=id).count() # get dislike count
+    likecount = Like.objects.filter(feeds1=id).count() # get likes count
+    dislikecount = Dislike.objects.filter(feeds1=id).count() # get dislike count
     feedDet = Feeds.objects.get(pk = id)
-    return render(request,'feedDetails.html', {'feedDet1': feedDet  }) #, 'likecount': likecount,'dislikecount': dislikecount
+    return render(request,'feedDetails.html', {'feedDet1': feedDet, 'likecount': likecount,'dislikecount': dislikecount })
 
 
 

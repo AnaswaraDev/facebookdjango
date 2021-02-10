@@ -37,13 +37,29 @@
                         <p>Date: {{feedDet1.date}}</p>
                     </div>
 
-           <!--  
-                    </div>-->      
-
+                    <div> <br>
+                        <span>
+                            {%if likecount %}
+                            {{likecount}}
+                            {%else%}
+                            0
+                            {%endif%}
+                        </span> &nbsp;
+                        <a href="{% url 'like' feedDet1.pk %} ">
+                            <i class="fas fa-thumbs-up" style="font-size:28px; color:grey"></i>
+                        </a>
+                        &nbsp;&nbsp;
+                        <span>{%if dislikecount %}{{dislikecount}}{%else%}0{%endif%}</span> &nbsp;
+                        <a href="{% url 'dislike' feedDet1.pk %} ">
+                            <i class="fas fa-thumbs-down" style="font-size:28px; color:grey "></i>
+                        </a>
+                    </div>
                 </div>
+
             </div>
         </div>
-        <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    </div>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 </body>
 
 </html>
