@@ -32,12 +32,18 @@
                     {% csrf_token %}
                     <h3 style="color:rgb(223, 240, 237); 
                    background-color: rgb(50, 70, 161); text-align:center"> Register here</h3> <br>
+                   <div class="row">
+                           <div class="col-xs-6 col-sm-6 col-md-6">
                             <div class="form-group" >
                             <input class="form-control" type="text" name="first_name" placeholder="First Name"><br>
                             </div>
+                           </div>
+                           <div class="col-xs-6 col-sm-6 col-md-6">
                             <div class="form-group" >
                             <input class="form-control" type="text" name="last_name" placeholder="Last Name"><br>
                             </div>
+                        </div>
+                   </div>
                             <div class="form-group" >
                             <input class="form-control" type="date" name="dob" placeholder="Date of birth"><br>
                             </div>
@@ -70,9 +76,6 @@
         <h3> {{message}} </h3>
         {% endfor %}
     </div>
-
-
-
 
 
 </body>

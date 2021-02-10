@@ -17,7 +17,11 @@
     <link rel="stylesheet" type="text/css" href="{%static 'styles/responsive.css' %}">
 </head>
 
-<body style="background-color: #b9ccc9;">
+<body style="box-shadow: 5px 10px 18px #888888;">
+
+ 
+
+
     <br><br>
     <div class="container">
         <div class="row">
@@ -26,7 +30,7 @@
             </div>
             <div class="col-md-6 " style="display: block;            
             padding:23px; color:white;">
-                <div class="col" style="background-color: white; padding:30px; color:black; ">
+                <div class="col" style="background-color: rgb(77, 93, 165); padding:30px; color:black; ">
                     <!--FEED DETAILS-->
                     <div style="background-color:#e4ece9;">
                         <p>User: {{feedDet1.user.first_name}} {{feedDet1.user.last_name}} </p>
@@ -44,12 +48,12 @@
                             {%endif%}
                         </span> &nbsp;
                         <a href="{% url 'like' feedDet1.pk %} ">
-                            <i class="fas fa-thumbs-up" style="font-size:28px; color:grey"></i>
+                            <i class="fas fa-thumbs-up" style="font-size:28px; color:white"></i>
                         </a>
                         &nbsp;&nbsp;
                         <span>{%if dislikecount %}{{dislikecount}}{%else%}0{%endif%}</span> &nbsp;
                         <a href="{% url 'dislike' feedDet1.pk %} ">
-                            <i class="fas fa-thumbs-down" style="font-size:28px; color:grey "></i>
+                            <i class="fas fa-thumbs-down" style="font-size:28px; color:white "></i>
                         </a>
                     </div>
 

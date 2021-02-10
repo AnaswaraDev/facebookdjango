@@ -8,5 +8,5 @@ urlpatterns = [
     path("<int:id>/feedDetails",views.feedDetails, name="feedDetails"),
     path("<int:pk>/like", views.like, name='like'),
     path("<int:pk>/dislike", views.dislike, name='dislike'),
-
+    path("userProfile", views.userProfile, name="userProfile"),
 ]

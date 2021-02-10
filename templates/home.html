@@ -3,82 +3,134 @@
 <html lang="en">
 
 <head>
-    <title>News Feed</title>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="Travello template project">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="{% static 'styles/bootstrap4/bootstrap.min.css' %}">
-    <link href="{%static 'plugins/font-awesome-4.7.0/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" type="text/css" href="{%static 'plugins/OwlCarousel2-2.2.1/owl.carousel.css' %}">
-    <link rel="stylesheet" type="text/css" href="{%static 'plugins/OwlCarousel2-2.2.1/owl.theme.default.css' %}">
-    <link rel="stylesheet" type="text/css" href="{%static 'plugins/OwlCarousel2-2.2.1/animate.css' %}">
-    <link rel="stylesheet" type="text/css" href="{%static 'styles/main_styles.css' %}">
-    <link rel="stylesheet" type="text/css" href="{%static 'styles/responsive.css' %}">
+  <title>News Feed</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="Travello template project">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="{% static 'styles/bootstrap4/bootstrap.min.css' %}">
+  <link href="{%static 'plugins/font-awesome-4.7.0/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" type="text/css" href="{%static 'plugins/OwlCarousel2-2.2.1/owl.carousel.css' %}">
+  <link rel="stylesheet" type="text/css" href="{%static 'plugins/OwlCarousel2-2.2.1/owl.theme.default.css' %}">
+  <link rel="stylesheet" type="text/css" href="{%static 'plugins/OwlCarousel2-2.2.1/animate.css' %}">
+  <link rel="stylesheet" type="text/css" href="{%static 'styles/main_styles.css' %}">
+  <link rel="stylesheet" type="text/css" href="{%static 'styles/responsive.css' %}">
 </head>
+
 <body>
+
+  <!--NAV BAR-->
+
+  <!--NAV BAR-->
+  <nav class="navbar navbar-expand-lg navbar-light " style="background-color: #3b5998;">
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav" style="padding-left: 992px;">
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+
+          <a class="nav-link" href="userProfile" style="color: white;">
+
+            User Profile <span class="sr-only"></span>
+          </a>
+    </div>
+    </li>
+    </ul>
+    </div>
+  </nav> <br> <br>
+  <!--NAV BAR-->
+
+
+  <!--USER DASHBOARD-->
+
+
+
+  <div class="row">
+    <div style="padding:40px">
+      <div class="col-xs-6 col-sm-6 col-md-6">
+        <div style="  border: 1px solid; height:320px; width:250px;padding:30px;
+           
+            box-shadow: 5px 10px 18px #888888;">
+
+          <div style="padding:39px; border-bottom: 1px solid #bbb; width: 200px; " >
+            <i class="fa fa-user solid" aria-hidden="true" style="font-size:78px; padding:10px"></i> <br>
+          </div> <br>
+
+          <h5> {{ user.first_name}} {{ user.last_name}} </h5> <br>
+          <h5> {{ user.email}}</h5> <br>
+        </div>
+      </div>
+    </div>
     <!--USER DASHBOARD-->
 
-    <div>
-        <div class="row">
-            <div style="  border: 1px solid;
-            padding: 30px;
-            box-shadow: 5px 10px 18px #888888;"> 
-            <i class="fa fa-user" aria-hidden="true" 
-            style="font-size:28px; padding:10px"></i> <br><br>
-            <h5> {{ user.first_name}} {{ user.last_name}} </h5> <br>
-            <h5> {{ user.email}}</h5> <br>
+    <!-- POST ADD-CODE -->
+
+
+    <div class=" col-6 col-sm-6 ">
+      <div style=" border: 1px solid; height:300px; width:850px;
+           
+      box-shadow: 5px 10px 18px #888888;">
+        <form action="{% url 'home' %}" method="post" class="form-box" style=" padding: 20px;"> <br><br>
+          {% csrf_token %}
+
+          <div class="form-group">
+            <textarea class="form-control" rows="4" cols="50" name="feed" placeholder="Enter Text"></textarea> <br>
+          </div>
+          <div class=" form-group text-right ">
+            <input class="btn-secondary" style="padding:12px" type="submit" value="Add Post">
+          </div>
+        </form>
+      </div>
+
+
+
+
+
+
+
+      <!-- POST ADD-CODE -->
+
+      <!--POST VIEW CODE-->
+      <div class="row">
+
+        <div class="col-6 col-sm-6">
+          <div style="border: 1px solid; height:2000px; width:850px;display: block;            
+          padding:25px;
+           
+      box-shadow: 5px 10px 18px #888888;  ">
+            {% for i in feed %}
+
+            <a href="{% url 'feedDetails'  i.pk %}">
+
+              <div class="col" style="border: solid 1px ; margin:14px;
+        background-color: #e4ece9;">
+
+                {% for j in usr %}
+                {% if j.pk == i.user.pk %}
+                <p>User: {{j.first_name}}&nbsp;{{j.last_name}}</p>
+                {%endif%}
+                {%endfor%}
+
+
+                <p>News Feed: {{i.description}}</p>
+                <p>Date: {{i.date}}</p>
+              </div>
+            </a>
+            {% endfor %}
+
           </div>
         </div>
       </div>
-   <!--USER DASHBOARD-->
-
-   <!-- POST ADD-CODE -->
-    <form action="{% url 'home' %}" method="post" class="form-box" style=" padding: 20px;"> <br><br>
-       {% csrf_token %}
-
-       <div class="form-group">
-           <textarea class="form-control" rows="4" cols="50" name="feed" placeholder="Enter Text"></textarea> <br>
-       </div>
-       <div class=" form-group text-center ">
-           <input class="btn-secondary" style="padding:12px" type="submit" value="Add Post">
-       </div>
-    </form>      
-
-
-
-   <!-- POST ADD-CODE -->
-
-   <!--POST VIEW CODE-->
-
-<div >
-    {% for i in feed %}
-
-    <a href="{% url 'feedDetails'  i.pk %}">
-        
-        <div class="col"style="border: solid 1px ; margin:14px;
-        background-color: #e4ece9;">
-
-            {% for j in usr %}
-            {% if j.pk == i.user.pk %}
-            <p>User: {{j.first_name}}&nbsp;{{j.last_name}}</p>
-            {%endif%}
-            {%endfor%}
-
-            
-            <p>News Feed: {{i.description}}</p>
-            <p>Date: {{i.date}}</p>
-        </div>
-    </a>  
-    {% endfor %}
-
-
-</div>
-
-<!--POST VIEW CODE-->
+    </div>
+  </div>
+  <!--POST VIEW CODE-->
 
 
 
 
 </body>
+
 </html>

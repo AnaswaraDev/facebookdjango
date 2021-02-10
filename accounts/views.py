@@ -6,6 +6,15 @@ from django.http import HttpResponse
 
 
 # Create your views here.
+def userProfile(request):
+    if 'q' in request.GET:
+        q=request.GET['q']
+        userlist1=CustomUser.objects.filter(first_name__icontains=q)
+    else:
+        userlist1 = CustomUser.objects.all()
+    return render(request,'userProfile.html',{'userlist':userlist1})
+
+
 def like(request, pk):
     if Like.objects.filter(user1=request.user.pk, feeds1=pk).exists(): # check user alredy liked or not
         pass
