@@ -4,10 +4,13 @@ from django.contrib import messages
 from datetime import datetime
 from django.http import HttpResponse
 
+
 # Create your views here.
 def home(request):
     if request.method == 'POST':
+        print("post")
         description = request.POST.get('feed')
+        print(description)
         date = datetime.now()
         user = request.user
         feed = Feeds()
@@ -15,13 +18,10 @@ def home(request):
         feed.date = date
         feed.user = user
         feed.save()
-        return redirect('home')
-    #return render(request,'home.html')
+    feed1 = Feeds.objects.all().order_by('-date')
+    usr = CustomUser.objects.all()
+    return render(request, 'home.html', {'feed': feed1, 'usr': usr})
 
-    else:
-        feed1 = Feeds.objects.all().order_by('-date')
-        usr = CustomUser.objects.all()
-        return render(request, 'home.html', {'feed': feed1, 'usr': usr})
 
 def register(request):
     if request.method == 'POST':
@@ -54,5 +54,4 @@ def register(request):
     else:
         return render(request,'register.html')
 
-def home(request):
-    return render(request,'home.html')
+
