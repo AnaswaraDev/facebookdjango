@@ -30,8 +30,9 @@
                 <form action="register" method="post" style="background-color: white; 
                 padding:24px;">
                     {% csrf_token %}
-                    <h3 style="color:rgb(223, 240, 237); 
-                   background-color: rgb(50, 70, 161); text-align:center"> Register here</h3> <br>
+                    <div style=" padding: 8px;"> 
+                    <h3 style="font-size:28px; color:rgb(223, 240, 237); 
+                   background-color: rgb(50, 70, 161); text-align:center"> Register here</h3></div> <br>
                    <div class="row">
                            <div class="col-xs-6 col-sm-6 col-md-6">
                             <div class="form-group" >
@@ -48,7 +49,7 @@
                             <input class="form-control" type="date" name="dob" placeholder="Date of birth"><br>
                             </div>
                             <div class="form-group" >
-                            <input class="form-control" type="text" name="username" placeholder="Username"><br>
+                            <input class="form-control" type="text" name="username" placeholder="username"><br>
                             </div>
                             <div class="form-group" >
                             <input class="form-control" type="email" name="email" placeholder="email"><br>
@@ -57,7 +58,7 @@
                             <input class="form-control" type="password" name="password1" placeholder="Password"><br>
                             </div>
                             <div class="form-group" >
-                            <input class="form-control" type="password" name="password2" placeholder="Confirm Password"><br><br>
+                            <input class="form-control" type="password" name="password2" placeholder="Confirm Password"><br>
                             </div>
                             <div class="text-center">
                             <input class="" style="padding:5px ;background: rgb(50, 70, 161);" type="Submit" style="color: rgb(23, 101, 104);">

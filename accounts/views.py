@@ -1,11 +1,45 @@
 from django.shortcuts import render,redirect
-from .models import CustomUser,Feeds,Like,Dislike,Comments
+from .models import CustomUser,Feeds,Like,Dislike,Comments,Follow
 from django.contrib import messages
 from datetime import datetime
 from django.http import HttpResponse
 
 
 # Create your views here.
+
+def follow(request,id):
+    usr2 = CustomUser.objects.get(pk = id)
+    follo = Follow()
+    follo.user = request.user
+    follo.following = usr2.pk
+    follo.save()
+    if Follow.objects.filter(user=request.user, following=usr2.pk).exists():
+        msg = 1
+    else: 
+        msg = 2
+    return render(request,'single.html', {'usr3': usr2, 'msg': msg})
+
+def unfollow(request,id):
+    usr2 = CustomUser.objects.get(pk = id)
+    Follow.objects.filter(user=request.user, following=usr2.pk).delete()
+    if Follow.objects.filter(user=request.user, following=usr2.pk).exists():
+        msg = 1
+    else: 
+        msg = 2
+    return render(request,'single.html', {'usr3': usr2, 'msg': msg})
+
+def single(request,id):
+    usr2 = CustomUser.objects.get(pk = id)
+    if Follow.objects.filter(user=request.user, following=usr2.pk).exists():
+        msg = 1
+    else: 
+        msg = 2
+
+    followers=Follow.objects.filter(following=usr2.pk).count() #follower
+    following =Follow.objects.filter(user=usr2.pk).count() #following
+
+    return render(request,'single.html', {'usr3': usr2, 'msg': msg , 'follower1':followers, 'following':following})
+
 def userProfile(request):
     if 'q' in request.GET:
         q=request.GET['q']
@@ -45,7 +79,10 @@ def dislike(request, pk):
     dislikecount = Dislike.objects.filter(feeds1=pk).count()# get dislike count
     feedDet = Feeds.objects.get(pk=pk)
     return render(request,'feedDetails.html', {'feedDet1': feedDet, 'likecount': likecount,'dislikecount': dislikecount })
-   
+
+
+
+
 def feedDetails(request,id):
     if request.method == 'POST':
         print("post")
@@ -81,8 +118,12 @@ def home(request):
         feed.user = user
         feed.save()
     feed1 = Feeds.objects.all().order_by('-date')
-    usr = CustomUser.objects.all()
-    return render(request, 'home.html', {'feed': feed1, 'usr': usr})
+    
+    follo = Follow.objects.filter(user=request.user)
+    following_count = Follow.objects.filter(user=request.user).count()
+    followers_count  = Follow.objects.filter(following=request.user.pk).count()
+    return render(request, 'home.html', {'feed': feed1,  'follo': follo,
+                                        'following_count': following_count, 'followers_count': followers_count})
     
 
 def register(request):
